@@ -22,7 +22,7 @@ When the car passes an exit-camera, this timestamp is also registered by the sys
 
 ### Architecture
 
-In order to simulate this in code, the following services are defined:
+In order to simulate a traffic control scenario in code, the following services are defined:
 
 ![Services](img/services.png)
 
@@ -48,6 +48,8 @@ The way the simulation works is depicted in the sequence diagram below:
 1. The FineCollectionService sends a fine to the owner of the vehicle by email.
 
 All actions described in this sequence are logged to the console during execution so you can follow the flow.
+
+The important point to note here is that all calls between services are direct, synchronous HTTP calls using the .NET Core HttpClient plumbing. While sometimes necessary, this type of synchronous communication is **NOT** considered a best practice for distributed microservice applications. However, decoupling communication can dramatically increase the architectural and operational complexity of an application. You'll soon see how Dapr reduces the inherent complexity of distributed microservice applications. 
 
 ### End-state with Dapr applied
 

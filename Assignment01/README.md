@@ -1,6 +1,6 @@
 # Assignment 1 - Run the application
 
-In this assignment, you'll run the application to make sure everything works correctly.
+In this assignment, you'll run the application to make sure everything works correctly. At this point, you'll be running the Traffic Control microservice application **without** any Dapr technology. 
 
 ## Step 1. Run the VehicleRegistration service
 
@@ -10,7 +10,7 @@ In this assignment, you'll run the application to make sure everything works cor
 
 2. Open the terminal window in VS Code.
 
-   > You can do this by using the hotkey ``Ctrl-` `` (Windows) or ``Shift-Ctrl-` `` (macOS).
+   > You can do this by using the hotkey ``Ctrl-Shift-` `` (Windows) or ``Shift-Ctrl-` `` (macOS).
 
 3. Make sure the current folder is `src/VehicleRegistrationService`.
 
@@ -22,7 +22,7 @@ Now you can test whether you can call the VehicleRegistrationService. You can do
 
 1. Open the file `src/VehicleRegistrationService/test.http` in VS Code. The request in this file simulates retrieving the vehicle- and owner information for a certain license-number.
 
-1. Click on `Execute request` in the file to send a request to the API:
+1. Click on `Send request` link immediately above the GET request in the file to send a request to the API:
 
    ![REST client](img/rest-client.png)
 
@@ -64,7 +64,7 @@ Now you can test whether you can call the VehicleRegistrationService. You can do
 
 1. Open the file `src/FineCollectionService/test.http` in VS Code. The request in this file simulates sending a detected speeding-violation to the FineCollectionService.
 
-1. Click on `Execute request` in the file to send a request to the API.
+1. Click on `Send request` in the file to send a request to the API.
 
 1. The response of the request will be shown in a separate window on the right. It should be a response with HTTP status code `200 OK` and no body.
 
@@ -82,7 +82,7 @@ Now you can test whether you can call the VehicleRegistrationService. You can do
 
 1. Open the `test.http` file in the project folder in VS Code.
 
-1. Click on `Execute request` for both requests in the file to send two requests to the API.
+1. Click on `Send request` for both requests in the file to send two requests to the API.
 
 1. The response of the requests will be shown in a separate window on the right. Both requests should yield a response with HTTP status code `200 OK` and no body.
 
@@ -97,7 +97,7 @@ Now you can test whether you can call the VehicleRegistrationService. You can do
 
    You should see the speeding-violation being handled by the FineCollectionService:
 
-   ![FineCollectionService logging](img/logging-finecollectionservice2.png)
+   ![FineCollectionService logging](img/logging-finecollectionservice.png)
 
 ## Step 3. Run the simulation
 
