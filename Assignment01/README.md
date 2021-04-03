@@ -1,6 +1,6 @@
 # Assignment 1 - Run the application
 
-In this assignment, you'll run the application to make sure everything works correctly. At this point, you'll be running the Traffic Control microservice application **without** any Dapr technology. 
+In this assignment, you'll run the Traffic Control application to make sure everything works correctly. At this point, you'll be running the microservice application **without** any Dapr technology. As you work through the modules of the lab, you will add Dapr technology to application, step-by-step.
 
 ## Step 1. Run the VehicleRegistration service
 
