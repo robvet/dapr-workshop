@@ -1,28 +1,28 @@
 # Assignment 1 - Run the application
 
-In this assignment, you'll run the Traffic Control application to make sure everything works correctly. At this point, you'll be running the microservice application **without** any Dapr technology. As you work through the modules of the lab, you will add Dapr technology to application, step-by-step.
+In this assignment, you'll run the Traffic Control application to make sure everything works correctly. Keep in mind that at this point, you'll be running the microservice application **without** any Dapr technology. As you work through the assignments of the lab, you will add Dapr technology to application, step-by-step.
 
 ## Step 1. Run the VehicleRegistration service
 
 1. Open the `src` folder in VS Code.
 
-   > Throughout the assignment you need to execute all steps in the same instance of VS Code.
+   > Throughout the assignment you'll execute *all steps* in the **same instance** of VS Code.
 
-2. Open the terminal window in VS Code.
+1. Open the terminal window in VS Code.
 
-   > You can do this by using the hotkey ``Ctrl-Shift-` `` (Windows) or ``Shift-Ctrl-` `` (macOS).
+   > You can open it from the **Terminal** menu item on the top nav menu bar or by using the hotkey ``Ctrl-Shift-` `` (Windows) or ``Shift-Ctrl-` `` (macOS).
 
-3. Make sure the current folder is `src/VehicleRegistrationService`.
+1. In the terminal window, set your current folder to `src/VehicleRegistrationService`.
 
-4. Start the service using `dotnet run`.
+1. Start the service by typing in the `dotnet run` command in the terminal window.
 
-> If you receive an error here, please double-check whether or not you have installed all the [prerequisites](..\README.md#Prerequisites) for the workshop!
+   > If you receive an error here, please double-check whether or not you have installed all the [prerequisites](..\README.md#Prerequisites) for the workshop!  
 
-Now you can test whether you can call the VehicleRegistrationService. You can do this using a browser, CURL or some other HTTP client. But there is a convenient way of testing RESTful APIs directly from VS Code (this uses the REST Client extension VS Code):
+Now you can test whether you can call the VehicleRegistrationService. You can do this using a browser, CURL or some other HTTP client. But there is a convenient way of testing RESTful APIs directly from VS Code (using the REST Client extension VS Code):
 
-1. Open the file `src/VehicleRegistrationService/test.http` in VS Code. The request in this file simulates retrieving the vehicle- and owner information for a certain license-number.
+1. Open the file `src/VehicleRegistrationService/test.http` in VS Code using the (file) Explorer feature. The request in this file simulates retrieving the vehicle and owner information for a certain license-number.
 
-1. Click on `Send request` link immediately above the GET request in the file to send a request to the API:
+1. Click on `Send request` link, located immediately above the GET request in the file and highlighted below in a *red box*, to send a request to the API:
 
    ![REST client](img/rest-client.png)
 
@@ -49,20 +49,23 @@ Now you can test whether you can call the VehicleRegistrationService. You can do
 
    ![VehicleRegistrationService logging](img/logging-vehicleregistrationservice.png)
 
+At this point, the Vehicle Registration microservice is up and running correctly!
+
 ## Step 2. Run the FineCollection service
 
 1. Make sure the VehicleRegistrationService service is running (result of step 1).
 
 1. Open a **new** terminal window in VS Code.
 
-   > You can do this by using the hotkey (``Ctrl-` `` on Windows, ``Shift-Ctrl-` `` on macOS) or clicking on the `+` button in the terminal window title bar:
+   > You can do this by using the hotkey (``Ctrl-` `` on Windows, ``Shift-Ctrl-` `` on macOS) or clicking on the `+` button in the terminal window title bar (shown in a red box):
+
    > ![](img/terminal-new.png)
 
-1. Make sure the current folder is `src/FineCollectionService`.
+1. In the terminal window, make sure the current folder is set to `src/FineCollectionService`.
 
-1. Start the service using `dotnet run`.
+1. Start the service using `dotnet run` in the terminal window.
 
-1. Open the file `src/FineCollectionService/test.http` in VS Code. The request in this file simulates sending a detected speeding-violation to the FineCollectionService.
+1. Open the file `src/FineCollectionService/test.http` in the VS Code (file) Explorer. The request in this file simulates sending a detected speeding-violation to the FineCollectionService.
 
 1. Click on `Send request` in the file to send a request to the API.
 
@@ -72,17 +75,19 @@ Now you can test whether you can call the VehicleRegistrationService. You can do
 
    ![FineCollectionService logging](img/logging-finecollectionservice.png)
 
+At this point, both the Vehicle Registration and Fine Collection microservices are up and running.
+
 ## Step 3. Run the TrafficControl service
 
 1. Make sure the VehicleRegistrationService and FineCollectionService are running (results of step 1 and 2).
 
-1. Open a **new** terminal window in VS Code and make sure the current folder is `src/TrafficControlService`.
+1. Open another **new** terminal window in VS Code and set the current folder to `src/TrafficControlService`.
 
 1. Start the service using `dotnet run`.
 
-1. Open the `test.http` file in the project folder in VS Code.
+1. Open the `test.http` file in the TrafficControl project folder in VS Code.
 
-1. Click on `Send request` for both requests in the file to send two requests to the API.
+1. Click on `Send request` for both the *Registry Entry* and *Register Exit* requests in the file to send two requests to the API.
 
 1. The response of the requests will be shown in a separate window on the right. Both requests should yield a response with HTTP status code `200 OK` and no body.
 
@@ -92,26 +97,28 @@ Now you can test whether you can call the VehicleRegistrationService. You can do
 
 1. Also inspect the logging of the FineCollectionService.
 
-   > You can do this by selecting another terminal window using the dropdown in the title-bar of the terminal window:
+   > You can do this by selecting the prior terminal window using the dropdown in the title-bar of the terminal window:
    ![](img/terminal-dropdown.png)
 
-   You should see the speeding-violation being handled by the FineCollectionService:
+   You should see the speeding-violation being issued by the FineCollectionService:
 
    ![FineCollectionService logging](img/logging-finecollectionservice.png)
 
+At this point, the three core microservices, Vehicle Registration, Fine Collection, and Traffic Control are up and running.
+
 ## Step 3. Run the simulation
 
-You've tested the APIs directly by using a REST client. Now you're going to run the simulation that actually simulates cars driving on the highway. The simulation will simulate 3 entry- and exit-cameras (one for each lane).
+You've tested the APIs directly by using a REST client. Now you're going to run the simulation microservice that simulates cars driving on the highway. The simulation will simulate 3 entry- and exit-cameras (one for each lane).
 
-1. Open a new terminal window in VS Code and make sure the current folder is `src/Simulation`.
+1. Open a new terminal window in VS Code and set the current folder to `src/Simulation`.
 
 1. Start the service using `dotnet run`.
 
-1. In the simulation window you should see something like this:
+1. In the terminal window you should see something like this:
 
    ![](img/logging-simulation.png)
 
-1. Also check the logging in all the other Terminal windows. You should see all entry- and exit events and any speeding-violations that were detected in the logging.
+1. Also check the logging in the other Terminal windows. You should see all entry- and exit events and any speeding-violations that were detected in the logging.
 
 Now we know the application runs correctly. It's time to start adding Dapr to the application.
 
@@ -119,7 +126,7 @@ Now we know the application runs correctly. It's time to start adding Dapr to th
 
 Make sure you stop all running processes and close all the terminal windows in VS Code before proceeding to the next assignment. Stopping a service or the simulation is done by pressing `Ctrl-C` in the terminal window. To close the terminal window, enter the `exit` command.
 
-> You can quickly close a terminal window by clicking on the trashcan icon in its title bar:
+> You can also close a terminal window by clicking on the trashcan icon in its title bar:
 > ![](img/terminal-trashcan.png)
 
 Go to [assignment 2](../Assignment02/README.md).
