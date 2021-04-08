@@ -4,11 +4,11 @@
 
 To complete this assignment, you must reach the following goals:
 
-1. The TrafficControlService sends `SpeedingViolation` messages using the Dapr pub/sub building block.
+1. The TrafficControlService will send `SpeedingViolation` messages using the Dapr pub/sub building block.
 
-1. The FineCollectionService receives `SpeedingViolation` messages using the Dapr pub/sub building block.
+1. The FineCollectionService will receive `SpeedingViolation` messages using the Dapr pub/sub building block.
 
-1. RabbitMQ is used as pub/sub message broker that runs as part of the solution in a Docker container.
+1. RabbitMQ will be used as pub/sub message broker that runs as part of the solution in a Docker container.
 
 > Don't worry if you have no experience with RabbitMQ. You will run it as a container in the background and don't need to interact with it directly in any way. The instructions will explain exactly how to do that.
 
@@ -28,7 +28,7 @@ In the example, you will use RabbitMQ as the message broker with the Dapr pub/su
    docker run -d -p 5672:5672 --name dtc-rabbitmq rabbitmq:3-alpine
    ```
 
-This will pull the docker image `rabbitmq:3-alpine` from Docker Hub and start it. The name of the container will be `dtc-rabbitmq`. The server will be listening for connections on port `5672` (which is the default port for RabbitMQ).
+The commmand will pull the docker image `rabbitmq:3-alpine` from Docker Hub, copy it onto your machine, and start it. It'll name the container  `dtc-rabbitmq`. The server will be listening for connections on port `5672` (which is the default port for RabbitMQ).
 
 If everything goes well, you should see some output like this:
 
@@ -48,27 +48,29 @@ You can then start the container later by entering the following command:
 docker start dtc-rabbitmq
 ```
 
-If you are done using the container, you can also remove it by entering the following command:
+Later on, when you are done using the container, you can remove it by entering the following command:
 
 ```console
 docker rm dtc-rabbitmq -f
 ```
 
-Once you have removed it, you need to start it again with the `docker run` command shown at the beginning of this step.
+Warning: Once you remove it, it's gone. To use it, again, you'll need to start over with the `docker run` command shown at the beginning of this step.
 
 > For your convenience, the `src/Infrastructure` folder contains Powershell scripts for starting the infrastructural components you'll use throughout the workshop. You can use the `src/Infrastructure/rabbitmq/start-rabbitmq.ps1` script to start the RabbitMQ container.
 >
-> If you don't mind starting all the infrastructural containers at once (also for assignments to come), you can also use the `src/Infrastructure/start-all.ps1` script.
+> If you want to start all the infrastructural containers at once (also for assignments to come), you can also use the `src/Infrastructure/start-all.ps1` script.
 
 ## Step 2: Configure the pub/sub component
 
-Until now, you have been using the Dapr components that are installed by default when you install Dapr on your machine. These are a state management component and a pub/sub component. They both use the Redis server that is also installed by default. The components are installed in the folder `%USERPROFILE%\.dapr\components` on Windows and `$HOME/.dapr/components` on Linux or Mac.
+Until now, you have been using the Dapr components that were installed by default on your machine. They include a state management and pub/sub component. Under the covers, both use Redis server which is also installed by default. The components are installed in the folder `%USERPROFILE%\.dapr\components` on Windows and `$HOME/.dapr/components` on Linux or Mac.
 
-Because you need to change the message broker from Redis to RabbitMQ, you will create a separate folder with the component configuration files and use this folder when starting the services using the Dapr CLI. You can specify which folder to use on the command-line with the `--components-path` flag.
+To change the message broker component from Redis to RabbitMQ, you'll create a new folder for the component configuration file. You'll specify the new folder whenever when starting services using the Dapr CLI. The `--components-path` flag tells Dapr where to find the new component files.
 
 1. Create a new folder `src/dapr/components`.
 
-1. Copy all files from the folder `%USERPROFILE%\.dapr\components\` on Windows and `$HOME/.dapr/components` on Linux or Mac to the `src/dapr/components` folder.
+1. Copy all the .yaml files from the folder `%USERPROFILE%\.dapr\components\` on Windows and `$HOME/.dapr/components` on Linux or Mac to the `src/dapr/components` folder.
+
+   > On most Windows 10 machines, look in `c:\users\<you>\.dapr\components`
 
 1. Open the file `src/dapr/components/pubsub.yaml` in VS Code.
 
@@ -102,15 +104,15 @@ Because you need to change the message broker from Redis to RabbitMQ, you will c
      - finecollectionservice
    ```
 
-As you can see, you specify a different type of pub/sub component (`pubsub.rabbitmq`) and you specify in the `metadata` how to connect to the RabbitMQ container you started in step 1 (running on localhost on port `5672`). The other metadata can be ignored for now. In the `scopes` section, you specify that only the TrafficControlService and FineCollectionService should use the pub/sub building block.
+As you can see, you specify a different type of pub/sub component (`pubsub.rabbitmq`). In the `metadata`, you tell Dapr how to connect to the RabbitMQ container you started in step 1 (running on localhost on port `5672`). The other metadata can be ignored for now. In the `scopes` section, you specify that only the TrafficControlService and FineCollectionService should use the pub/sub building block.
 
 ## Step 3: Send messages from the TrafficControlService
 
-With the Dapr pub/sub building block, you use a *topic* to send and receive messages. The producer sends messages to the topic and a (or more) consumer(s) subscribe to this topic to receive messages. First you are going to prepare the TrafficControlService so it can send messages using Dapr pub/sub.
+With the Dapr pub/sub building block, you use a *topic* to send and receive messages. The producer sends messages to the topic while one-to-many consumers subscribe to this topic to receive messages. First you are going to prepare the TrafficControlService to send messages using Dapr pub/sub. It'll become the *publisher*.
 
 1. Open the file `src/TrafficControlService/Controllers/TrafficController.cs` in VS Code.
 
-1. Near the end of the method, you find the code that sends a `SpeedingViolation` message to the FineCollectionService over HTTP:
+1. Near the end of the `VehicleExit` method, you find the code that sends a `SpeedingViolation` message to the FineCollectionService over HTTP:
 
    ```csharp
    // publish speedingviolation
@@ -118,11 +120,18 @@ With the Dapr pub/sub building block, you use a *topic* to send and receive mess
    await _httpClient.PostAsync("http://localhost:6001/collectfine", message);
    ```
 
-1. The URL for publishing a message using the Dapr pub/sub API is: `http://localhost:<daprPort>/v1.0/publish/<pubsub-name>/<topic>`. You'll use this API to send a message to the `collectfine` topic using the pub/sub component named `pubsub`. The Dapr sidecar for the TrafficControlService runs on HTTP port `3600`. Replace the URL in the HTTP call with a call to the Dapr pub/sub API:
+1. Dapr has a standard template for publishing a message using the Dapr Pub/Sub building block:
+
+   ```csharp
+     http://localhost:<daprPort>/v1.0/publish/<pubsub-name>/<topic>
+    ```
+1. You'll use this template to send a message to the `collectfine` topic. The new call will instruct Dapr to use the pub/sub component named `pubsub`. The Dapr sidecar for the TrafficControlService will run on HTTP port `3600`. Replace the hardcoded URL in the `VehicleExit` method with a call to the Dapr pub/sub API:
 
    ```csharp
    await _httpClient.PostAsync("http://localhost:3600/v1.0/publish/pubsub/collectfine", message);
    ```
+
+Keep in mind that TrafficControlService is calling its Dapr sidecar service. The sidecar will execute the publish command using the Dapr pub/sub building block and component.
 
 That's it. You now use Dapr pub/sub to publish a message to a message broker.
 
