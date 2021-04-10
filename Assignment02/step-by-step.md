@@ -17,13 +17,13 @@ This assignment targets number **1** in the end-state setup:
 
 ## Step 1: Start the VehicleRegistrationService with Dapr
 
-In assignment 1, you started all the services using `dotnet run`. When you want a Dapr sidecar to handle its communication, you must start the service using the Dapr CLI. When starting the service, you must provide values for a number of parameters:
+In assignment 1, you started all the services using `dotnet run`. The services then communicated among each other using direct HTTP calls. To use Dapr for service communication, you'll need the Dapr CLI to start Dapr sidecars for each service. To do so, you'll need to provide values for a number of parameters:
 
 - The service needs a unique id which Dapr can use to find it. This is called the *app-id* (or application Id). You specify this with the `--app-id` flag on the command-line.
 
-- Each of the services listens on a different HTTP port for requests (to prevent port collisions on localhost). You'll run the VehicleRegistrationService on port `6002`. You'll inform Dapr using the `--app-port` flag on the command-line. Doing so enables the Dapr sidecar to communicate with the service.
+- Each service listens on a different HTTP port for requests (to prevent port collisions on localhost). You'll run the VehicleRegistrationService on port `6002`. You'll inform Dapr using the `--app-port` flag on the command-line. Doing so enables the Dapr sidecar to communicate with the service.
 
-- The service can communicate with the Dapr sidecar using  HTTP or gRPC. By default these ports are `3500` and `50001`. But to prevent confusion, you'll use different port numbers in the assignments. To prevent port collisions on the local machine when running multiple services, you have to specify a unique HTTP and gRPC port per service. You specify this with the `--dapr-http-port` and `--dapr-grpc-port` flags on the command-line. Throughout the workshop, you will use the following ports:
+- The service can communicate with the Dapr sidecar using  HTTP or gRPC. By default, Dapr listens on port `3500` and `50001`, respectively. But to prevent confusion, you'll use different port numbers in the lab assignments. To prevent port collisions on the local machine when running multiple services, you have to specify a unique HTTP and gRPC port per service. You specify this with the `--dapr-http-port` and `--dapr-grpc-port` flags on the command-line. Throughout the workshop, you will use the following ports:
 
   | Service                    | Application Port | Dapr sidecar HTTP port | Dapr sidecar gRPC port |
   | -------------------------- | ---------------- | ---------------------- | ---------------------- |
@@ -190,13 +190,13 @@ Now you'll change the code in FineCollection to use the Dapr SDK `HttpClient` in
            "vehicleregistrationservice", "http://localhost:3601")));
    ```
 
-   With this snippet, you use the `DaprClient` to create an `HttpClient` instance for doing service invocation. You specify the `app-id` of the service you want to communicate with. You also specify the address of the Dapr sidecar for the FineCollectionService as it doesn't use the default Dapr HTTP port (3500). The resulting `HttpClient` instance is explicitly passed into the constructor of the `VehicleRegistrationService` proxy.
+   With this snippet, you use the `DaprClient` to create an `HttpClient` instance for doing service invocation. You specify the `app-id` of the service you want to communicate with. You also specify the address of the Dapr sidecar for the FineCollectionService as it doesn't use the default Dapr HTTP port (3500). The `HttpClient` instance created by Dapr is explicitly passed into the constructor of the `VehicleRegistrationService` proxy.
 
-   > This is an example of the deep integration of Dapr with ASP.NET Core when using the `Dapr.AspNetCore` library. You can still use the `HttpClient` (and its rich feature-set) in your code, but under the hood the Dapr service invocation building block is used.
+   > This is an example of the deep integration of Dapr with ASP.NET Core when using the `Dapr.AspNetCore` library. You can still use the `HttpClient` (and its rich feature-set) in your code, but under the hood it uses the Dapr service invocation building block to communicate.
 
 1. Open the file `src/FineCollectionService/Proxies/VehicleRegistrationService.cs` in VS Code.
 
-1. Because the `HttpClient` passed into this class has already been created for a certain `app-id`, you can omit the host information from the request URL. Change the URL that is used in the `GetVehicleInfo` to `/vehicleinfo/{license-number}`. The method should now look like this:
+1. Because the `HttpClient` passed into this class has already been created with a specific `app-id`, you can omit the host information from the request URL. Change the URL that is used in the `GetVehicleInfo` to `/vehicleinfo/{license-number}`. The method should now look like this:
 
    ```csharp
    public async Task<VehicleInfo> GetVehicleInfo(string licenseNumber)

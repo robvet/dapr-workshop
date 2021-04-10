@@ -41,6 +41,8 @@ To get step-by-step instructions to achieve the goals, open the [step-by-step in
 
 ## Next assignment
 
+You've now completed this assignment. 
+
 Make sure you stop all running processes and close all the terminal windows in VS Code before proceeding to the next assignment.
 
 Go to [assignment 4](../Assignment04/README.md).

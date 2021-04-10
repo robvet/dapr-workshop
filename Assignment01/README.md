@@ -1,10 +1,10 @@
 # Assignment 1 - Run the application
 
-In this assignment, you'll run the Traffic Control application to make sure everything works correctly. Keep in mind that at this point, you'll be running the microservice application **without** any Dapr technology. As you work through the assignments of the lab, you will add Dapr technology to application, step-by-step.
+In this assignment, you'll run the Traffic Control application to make sure everything works correctly. At this point, you'll be running the microservice application **without** any Dapr technology. As you work through the lab assignments, you'll add Dapr technology step-by-step.
 
 ## Step 1. Run the VehicleRegistration service
 
-1. Open the `src` folder in VS Code.
+1. From the file explorer in VS Code, open the `src` folder.
 
    > Throughout the assignment you'll execute *all steps* in the **same instance** of VS Code.
 
