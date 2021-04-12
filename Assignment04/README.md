@@ -4,19 +4,19 @@ In this assignment, you're going to add Dapr **state management** in the Traffic
 
 ## Dapr State management building block
 
-Dapr offers key/value storage APIs to create stateful, long-running services. Services can use these APIs to leverage any of the supported state stores, without adding or learning a third party SDK.
+Dapr includes APIs that support stateful, long-running services with key/value storage. Services can use these APIs to leverage a variety of popular state stores, without adding or learning a third party SDK.
 
-When using state management, your application will also be able to leverage several other features that would otherwise be complicated and error-prone to build yourself such as:
+Furthermore, the Dapr state management building block provides several other features that would otherwise be complicated and error-prone to build yourself:
 
 - Distributed concurrency and data consistency
 - Retry policies
 - Bulk CRUD operations
 
-See below for a diagram of state management's high level architecture:
+The following diagram shows the high level architecture:
 
-<img src="img/state_management.png" style="zoom: 50%;" />
+<img src="img/state_management.png" style="zoom: 50%;;padding-top: 25px;" />
 
-For this hands-on assignment, this is all you need to know about this building block. If you want to get more detailed information, read the [introduction to this building block](https://docs.dapr.io/developing-applications/building-blocks/state-management/) in the Dapr documentation.
+Right now, this is all you need to know about this building block. If you want to get more detailed information, read [introduction to the state management building block](https://docs.dapr.io/developing-applications/building-blocks/state-management/).
 
 ## Assignment goals
 
@@ -25,9 +25,9 @@ To complete this assignment, you must reach the following goals:
 - The TrafficControl service saves the state of a vehicle (`VehicleState` class) using the state management building block after vehicle entry.
 - The TrafficControl service reads and updates the state of a vehicle using the state management building block after vehicle exit.
 
-This assignment targets number **3** in the end-state setup:
+This assignment targets the operation labeled as **number 3** in the end-state setup:
 
-<img src="../img/dapr-setup.png" style="zoom: 67%;" />
+<img src="../img/dapr-setup.png" style="zoom: 67%;;padding-top: 25px;" />
 
 ## DIY instructions
 

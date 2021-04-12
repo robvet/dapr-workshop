@@ -18,7 +18,7 @@ To complete this assignment, you must reach the following goals:
 - The MQTT binding uses the lightweight MQTT message broker Mosquitto that runs as part of the solution in a Docker container.
 - The Camera Simulation publishes entry- and exit-cam messages to the MQTT broker.
 
-This assignment targets number **5** in the end-state setup:
+This assignment targets the operation labeled as **number 5** in the end-state setup:
 
 <img src="../img/dapr-setup.png" style="zoom: 67%;" />
 

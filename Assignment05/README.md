@@ -17,7 +17,7 @@ To complete this assignment, you must reach the following goals:
 - The FineCollectionService uses the Dapr SMTP output binding to send an email.
 - The SMTP binding calls a development SMTP server that runs as part of the solution in a Docker container.
 
-This assignment targets number **4** in the end-state setup:
+This assignment targets the operation labeled as **number 4** in the end-state setup:
 
 <img src="../img/dapr-setup.png" style="zoom: 67%;" />
 

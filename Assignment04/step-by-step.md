@@ -2,22 +2,14 @@
 
 ## Assignment goals
 
-To complete this assignment, you must reach the following goals:
-
-- The TrafficControl service saves the state of a vehicle (`VehicleState` class) using the state management building block after vehicle entry.
-- The TrafficControl service reads and updates the state of a vehicle using the state management building block after vehicle exit.
-
-This assignment targets number **3** in the end-state setup:
-
-<img src="../img/dapr-setup.png" style="zoom: 67%;" />
-
+In this assignment, you'll evolve the TrafficControl application to leverage the Dapr state management building block. Once configured, it'll store the vehicle state as a car passes through the entry-point camera.
 ## Step 1: Use the Dapr state management building block
 
-First, you need to add something to the state management configuration file:
+First, you need to update the existing state management configuration file:
 
-1. Open the file `src/dapr/components/statestore.yaml` in VS Code.
+ 1. Open the file `src/dapr/components/statestore.yaml` in VS Code.
 
-1. Add a `scopes` section to the configuration file that specifies that only the TrafficControlService should use the state management building block:
+1. Add a `scopes` section to the configuration file that specifies that only the TrafficControlService can use the state management building block:
 
    ```yaml
    apiVersion: dapr.io/v1alpha1
@@ -37,7 +29,7 @@ First, you need to add something to the state management configuration file:
      - trafficcontrolservice
    ```
 
-Now you will add code to the TrafficControlService so it uses the Dapr state management building block to store vehicle state:
+Now you will add code to the TrafficControlService so that it uses the Dapr state management building block to store vehicle state:
 
 1. Open the `src` folder in this repo in VS Code.
 
@@ -57,7 +49,7 @@ Now you will add code to the TrafficControlService so it uses the Dapr state man
 
 1. Open the file `src/TrafficControlService/Repositories/InMemoryVehicleStateRepository.cs` in VS Code.
 
-1. This is the repository used by the TrafficControlService. Inspect the code in this class. Inspect the code of this repository. As you can see, this repository uses a very simple in-memory dictionary to store the state. The license number of the vehicle is used as the key. You are going to replace this implementation with one that uses Dapr state management.
+1. This is the repository used by the TrafficControlService. Inspect the code. As you can see, it uses a simple in-memory dictionary to store the state. The license number of the vehicle is used as the key. You are going to replace this implementation with one that uses Dapr state management.
 
 1. Create a new file `src/TrafficControlService/Repositories/DaprVehicleStateRepository.cs` in VS Code.
 
@@ -89,7 +81,7 @@ Now you will add code to the TrafficControlService so it uses the Dapr state man
     }
     ```
 
-1. Add a private field named `_httpClient` that holds an instance of a `HttpClient` and a constructor that accepts a `HttpClient` instance as argument and initializes this field:
+1. In the new repository class, add a private field named `_httpClient` that holds an instance of a `HttpClient` and a constructor that accepts a `HttpClient` instance as argument and initializes the field:
 
     ```csharp
     private readonly HttpClient _httpClient;
@@ -100,7 +92,7 @@ Now you will add code to the TrafficControlService so it uses the Dapr state man
     }
     ```
 
-1. The URL for saving data using the Dapr state API is: `http://localhost:<daprPort>/v1.0/state/<statestore-name>`. You'll use this API to store the VehicleState. Replace the implementation of the `SaveVehicleStateAsync` method with the following code:
+1. The URL template for saving data using the Dapr state API is: `http://localhost:<daprPort>/v1.0/state/<statestore-name>`. You'll use this API to store the VehicleState. In this class, replace the implementation of the `SaveVehicleStateAsync` method with the following code:
 
     ```csharp
     var state = new[]
@@ -116,9 +108,9 @@ Now you will add code to the TrafficControlService so it uses the Dapr state man
         state);
    ```
 
-    > As you can see here, the structure of the data when saving state is an array of key/value pairs. In this example you use an anonymous type as payload.
+    > As you can see, the data structure for saving state is an array of key/value pairs. In this example you use an anonymous type as payload.
 
-1. The URL for getting data using the Dapr state API is: `http://localhost:<daprPort>/v1.0/state/<statestore-name>/<key>`. You'll use this API to retrieve the VehicleState. Replace the implementation of the `GetVehicleStateAsync` method with the following code:
+1. The URL template for getting data using the Dapr state API is: `http://localhost:<daprPort>/v1.0/state/<statestore-name>/<key>`. You'll use this API to retrieve the VehicleState. Replace the implementation of the `GetVehicleStateAsync` method with the following code:
 
     ```csharp
     var state = await _httpClient.GetFromJsonAsync<VehicleState>(
@@ -171,7 +163,7 @@ namespace TrafficControlService.Repositories
 }
 ```
 
-Now you need to make sure your new repository is registered with dependency-injection.
+Now you need to register the new repository with the .NET Core dependency-injection container.
 
 1. Open the file `src/TrafficControlService/Startup.cs`.
 

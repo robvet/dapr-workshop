@@ -18,16 +18,16 @@ Note how different pub/sub components (concrete providers) can be configured for
 
  > For more detailed information on messaging in microservice applications, read the service-to-service communication section in the [Architecting Cloud Native .NET Apps for Azure](https://docs.microsoft.com/dotnet/architecture/cloud-native/service-to-service-communication) guidance eBook.
 
-
 ## Assignment goals
 
 To complete this assignment, you must reach the following goals:
 
 1. The TrafficControlService sends `SpeedingViolation` messages using the Dapr pub/sub building block.
-2. The FineCollectionService receives `SpeedingViolation` messages using the Dapr pub/sub building block.
-3. RabbitMQ is used as pub/sub message broker that runs as part of the solution in a Docker container.
+1. The FineCollectionService receives `SpeedingViolation` messages using the Dapr pub/sub building block.
+1. RabbitMQ will be used as pub/sub message broker that runs as part of the solution in a Docker container.
+1. Azure Service Bus can be substituted as a message broker without code changes.
 
-This assignment targets number **2** in the end-state setup:
+This assignment targets the operations labeled as **number 2** in the end-state setup:
 
 <img src="../img/dapr-setup.png" style="zoom: 67%;" />
 

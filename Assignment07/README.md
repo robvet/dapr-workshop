@@ -32,7 +32,7 @@ To complete this assignment, you must reach the following goals:
 - The credentials used by the SMTP output binding to connect to the SMTP server are retrieved using the Dapr secrets management building block.
 - The FineCollectionService retrieves the license key for the `FineCalculator` component it uses from the Dapr secrets management building block.
 
-This assignment targets number **6** in the end-state setup:
+This assignment targets the operation labeled as **number 6** in the end-state setup:
 
 <img src="../img/dapr-setup.png" style="zoom: 67%;" />
 
