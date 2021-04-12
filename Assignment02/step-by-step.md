@@ -126,7 +126,7 @@ First you're going to change the code so it calls the Dapr sidecar:
 
 Now you're going to test the application from end-to-end:
 
-1. You'll now start the TrafficControlService:
+1. First, start the TrafficControlService:
 
    <img src="../img/start-trafficcontrol.png" style="zoom: 25%;padding-top: 25px;" /> 
 
@@ -140,7 +140,7 @@ Now you're going to test the application from end-to-end:
 
    > The TrafficControlService does not need to run with a Dapr sidecar in this assignment. This is because it will still call the FineCollectionService over HTTP as before.
 
-   The services are up & running. Now you're going start the traffic simulation service:
+1. Finally, you're going start the traffic simulation service:
 
    <img src="../img/start-simulator.png" style="zoom: 25%;padding-top: 25px;" /> 
 
