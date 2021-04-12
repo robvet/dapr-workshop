@@ -212,9 +212,9 @@ You're going to start the application, service-by-service. While doing so, you'l
 
 1. Make sure no services from previous tests are running (close the command-shell windows).
 
-1. First, you'll start the VehicleRegistrationService as shown below:
+1. First, you'll start the VehicleRegistrationService shown below:
  
-   <img src="img/start-vehicleregistration.png" style="zoom: 30%;padding-top: 25px;" />
+   <img src="../img/start-vehicleregistration.png" style="zoom: 30%;padding-top: 25px;" />
 
 1. Open a **new** terminal window in VS Code and make sure the current folder is `src/VehicleRegistrationService`.
 
@@ -229,9 +229,9 @@ You're going to start the application, service-by-service. While doing so, you'l
 1. Look for the following output:
    > *You're up and running! Both Dapr and your app logs will appear here.*
 
-1. Next, you'll start the FineCollecitonService as shown below:
+1. Next, you'll start the FineCollecitonService: 
 
-   <img src="img/start-finecollection.png" style="zoom: 30%;padding-top: 25px;" />
+   <img src="../img/start-finecollection.png" style="zoom: 30%;padding-top: 25px;" />
 
 1. Open a **second** new terminal window in VS Code and change the current folder to `src/FineCollectionService`.
 
@@ -244,9 +244,9 @@ You're going to start the application, service-by-service. While doing so, you'l
 1. Look for the following output:
    > *You're up and running! Both Dapr and your app logs will appear here.*
 
-1. Next, you'll start the TrafficControlService as shown below:
+1. Next, you'll start the TrafficControlService:
 
-   <img src="img/start-trafficcontrol.png" style="zoom: 30%;padding-top: 25px;" />
+   <img src="../img/start-trafficcontrol.png" style="zoom: 30%;padding-top: 25px;" />
 
 1. Open a **third** new terminal window in VS Code and change the current folder to `src/TrafficControlService`.
 
@@ -259,9 +259,9 @@ You're going to start the application, service-by-service. While doing so, you'l
 1. Look for the following output:
    > *You're up and running! Both Dapr and your app logs will appear here.*
 
-1. Finally, you'll start the Traffic Simulator as shown below:
+1. Finally, you'll start the Traffic Simulator:
 
-   <img src="img/start-simulator.png" style="zoom: 30%;padding-top: 25px;" />
+   <img src="../img/start-simulator.png" style="zoom: 30%;padding-top: 25px;" />
 
 1. Open a **fourth** new terminal window in VS Code and change the current folder to `src/Simulation`.
 
