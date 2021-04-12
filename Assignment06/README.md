@@ -8,7 +8,7 @@ In this assignment you're going to focus on Dapr input bindings See below for a 
 
 <img src="img/input-binding.png" style="zoom: 50%;" />
 
-For this hands-on assignment, this is all you need to know about output bindings. If you want to get more detailed information, read the [introduction to this building block](https://docs.dapr.io/developing-applications/building-blocks/bindings/) in the Dapr documentation.
+For this hands-on assignment, this is all you need to know about input bindings. If you want to get more detailed information, read the [introduction to this building block](https://docs.dapr.io/developing-applications/building-blocks/bindings/) in the Dapr documentation.
 
 ## Assignment goals
 
