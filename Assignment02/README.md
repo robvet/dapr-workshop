@@ -8,7 +8,7 @@ While asynchronous communication across microservices is favored, some operation
 
 Operationally, it's important to not *hardcode* endpoints when implementing synchronous service calls. This practice becomes especially important in orchestrated environments, such as Kubernetes, where services are continually moved across cluster nodes and replaced with newer versions. The Dapr service invocation building block addresses service-to-service communication. Here is how it works:
 
-<img src="img/service-invocation.png" style="zoom: 33%;padding-top: 50px;" />
+<img src="img/service-invocation.png"; style="zoom: 33%;padding-top: 50px;" />
 
 In Dapr, every service is started with a unique Id (the *app-id*) which can be used to find it. What happens if Service A needs to call Service B?
 
