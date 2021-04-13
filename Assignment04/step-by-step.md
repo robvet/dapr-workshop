@@ -2,7 +2,9 @@
 
 ## Assignment goals
 
-In this assignment, you'll evolve the TrafficControl application to leverage the Dapr state management building block. Once configured, it'll store the vehicle state as a car passes through the entry-point camera.
+In this assignment, you'll evolve the TrafficControl application to leverage the Dapr state management building block. Once configured, it'll store the vehicle state as a car passes through the entry-point camera. The operation takes place in the TrafficControlService as shown below:
+
+<img src="img/state-management-operation.png" style="zoom: 67%;;padding-top: 25px;" />
 ## Step 1: Use the Dapr state management building block
 
 First, you need to update the existing state management configuration file:
@@ -167,13 +169,13 @@ Now you need to register the new repository with the .NET Core dependency-inject
 
 1. Open the file `src/TrafficControlService/Startup.cs`.
 
-1. In the `ConfigureServices` method, the `IVehicleStateRepository` implementation to use is registered with dependency injection:
+1. In the `ConfigureServices` method, the `IVehicleStateRepository` implementation is registered with dependency injection:
 
    ```csharp
    services.AddSingleton<IVehicleStateRepository, InMemoryVehicleStateRepository>();
    ```
 
-1. Replace the `InMemoryVehicleStateRepository` with your new new `DaprVehicleStateRepository`:
+1. Replace the `InMemoryVehicleStateRepository` with your new `DaprVehicleStateRepository` concrete class:
 
    ```csharp
    services.AddSingleton<IVehicleStateRepository, DaprVehicleStateRepository>();
@@ -193,6 +195,8 @@ Now you're ready to test the application.
 
 ## Step 2a: Test the application
 
+Now, we'll test the update by running the application from end-to-end.
+
 1. Make sure no services from previous tests are running (close the terminal windows)
 
 1. Make sure all the Docker containers introduced in the previous assignments are running (you can use the `src/Infrastructure/start-all.ps1` script to start them).
@@ -205,7 +209,7 @@ Now you're ready to test the application.
    dapr run --app-id vehicleregistrationservice --app-port 6002 --dapr-http-port 3602 --dapr-grpc-port 60002 --components-path ../dapr/components dotnet run
    ```
 
-1. Open a **new** terminal window in VS Code and change the current folder to `src/FineCollectionService`.
+1. Open a **second** new terminal window in VS Code and change the current folder to `src/FineCollectionService`.
 
 1. Enter the following command to run the FineCollectionService with a Dapr sidecar:
 
@@ -213,7 +217,7 @@ Now you're ready to test the application.
    dapr run --app-id finecollectionservice --app-port 6001 --dapr-http-port 3601 --dapr-grpc-port 60001 --components-path ../dapr/components dotnet run
    ```
 
-1. Open a **new** terminal window in VS Code and change the current folder to `src/TrafficControlService`.
+1. Open a **third** new terminal window in VS Code and change the current folder to `src/TrafficControlService`.
 
 1. Enter the following command to run the TrafficControlService with a Dapr sidecar:
 
@@ -221,7 +225,7 @@ Now you're ready to test the application.
    dapr run --app-id trafficcontrolservice --app-port 6000 --dapr-http-port 3600 --dapr-grpc-port 60000 --components-path ../dapr/components dotnet run
    ```
 
-1. Open a **new** terminal window in VS Code and change the current folder to `src/Simulation`.
+1. Open a **fourth** new terminal window in VS Code and change the current folder to `src/Simulation`.
 
 1. Start the simulation:
 
@@ -242,6 +246,8 @@ Obviously, the behavior of the application is exactly the same as before. But ar
    ```console
    docker exec -it dapr_redis redis-cli
    ```
+
+   > Dapr originally installed a Redis container. Here you are starting the Redis container in interactive mode and invoking the Redis command line, redis-cli.
 
 1. In the redis-cli enter the following command to get the list of keys of items stored in the redis cache:
 

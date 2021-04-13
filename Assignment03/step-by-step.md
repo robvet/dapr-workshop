@@ -514,9 +514,9 @@ The answer? Change the YAML configuration file. There are absolutely no code cha
 
    > What changed? `namespace`, `type`, and the underlying `spec` metadata. 
 
-1. In the Service Bus blade, click on `Shared access policies` and `Add`. In the `Add SAS Policy` dialog box, name your new policy *Dapr* and grant it `Send` and `Listen` permissions. In the same window, copy the `Primary Connection String`' Close the SAS dialog box and paste the connection string into the `pubsub' YAML file.
+1. You need to provide a connection string for Azure Service Bus. Normally, you'd create a [Shared Access Secret or enable authentication/authorization with AAD](https://docs.microsoft.com/azure/service-bus-messaging/service-bus-authentication-and-authorization). For now, however, keep your focus on Dapr. In the Service Bus portal blade, click on `Shared access policies` and then the `RootManagerSharedAccessKey` Copy the connection string value from `Primary Connection String`' Close the SAS dialog box and paste the connection string into the `pubsub' YAML file.
 
-    > Warning: This assignment exposes the connection string in plain text. In a real world application you'd access secrets from a secure secret store. You'll do that in a later assignment.
+    > Warnings: (1) Never use the RootManageSharedAccessKey in real-world application. (2) Never expose the connection string in plain text. In a real world application you'd create a custom shared access key and access it from a secure secret store. You'll do that in a later assignment.
 
 1. Stop and restart the TrafficControlService and FineCollectionService (the second and third services from step 5).
 
