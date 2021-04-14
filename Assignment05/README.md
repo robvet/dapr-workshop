@@ -4,11 +4,11 @@ In this assignment, you're going to use a Dapr **output binding** in the FineCol
 
 ## Dapr bindings
 
-Dapr offers the bindings building block to easily interface with external systems. Bindings are divided into input bindings and output bindings. Input bindings can trigger your services by picking up events from external systems. Output bindings are an easy way to invoke functionality of some external system. Both input and output bindings do this without you as a developer having to learn the API or SDK of the external system. You only need to know the Dapr bindings API. See below for a diagram of how output bindings work:
+Dapr offers a *bindings* building block to easily interface with external systems. Bindings are divided into input bindings and output bindings. Input bindings trigger your services by picking up events from external systems. Output bindings are an easy way to invoke functionality of an external system. Both input and output bindings work without the developer having to learn the API or SDK of the external system. You only need to know the Dapr bindings API. See below for a diagram of how output bindings work:
 
 <img src="img/output-binding.png" style="zoom: 50%;" />
 
-For this hands-on assignment, this is all you need to know about output bindings. If you want to get more detailed information, read the [introduction to this building block](https://docs.dapr.io/developing-applications/building-blocks/bindings/) in the Dapr documentation. In the next assignment, you will also use a Dapr input binding.
+For this hands-on assignment, you will add a output binding leveraging the Dapr binding building block. In the next assignment, you will implement a Dapr input binding. For detailed information, read the [introduction to this building block](https://docs.dapr.io/developing-applications/building-blocks/bindings/) in the Dapr documentation and the [bindings chapter](https://docs.microsoft.com/dotnet/architecture/dapr-for-net-developers/bindings) in the [Dapr for .NET developers](https://docs.microsoft.com/dotnet/architecture/dapr-for-net-developers/) guidance eBook.
 
 ## Assignment goals
 
@@ -30,6 +30,8 @@ First open the `src` folder in this repo in VS Code. Then open the [Bindings doc
 To get step-by-step instructions to achieve the goals, open the [step-by-step instructions](step-by-step.md).
 
 ## Next assignment
+
+Congratulations, you have now completed assignment 5!
 
 Make sure you stop all running processes and close all the terminal windows in VS Code before proceeding to the next assignment.
 

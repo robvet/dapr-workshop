@@ -1,19 +1,8 @@
 # Assignment 5 - Add a Dapr output binding
 
-## Assignment goals
-
-To complete this assignment, you must reach the following goals:
-
-- The FineCollectionService uses the Dapr SMTP output binding to send an email.
-- The SMTP binding calls a development SMTP server that runs as part of the solution in a Docker container.
-
-This assignment targets number **4** in the end-state setup:
-
-<img src="../img/dapr-setup.png" style="zoom: 67%;" />
-
 ## Step 1: Run the SMTP server
 
-In this assignment, you will use [MailDev](https://github.com/maildev/maildev) as your SMTP server. This is a development SMTP server that doesn't actually send out emails (by default), but collects them and shows them in an inbox type web application it has built-in. This is extremely handy in test or demo scenarios.
+In this assignment, you will use the open-source [MailDev](https://github.com/maildev/maildev) component, running inside in a container, as your SMTP server. This is a development SMTP server that doesn't actually send out emails (by default), but collects them and shows them in a built-in inbox. The tool extremely handy for test or demo scenarios.
 
 You will run this server as a Docker container:
 
@@ -45,21 +34,23 @@ You can then start the container later by entering the following command:
 docker start dtc-maildev
 ```
 
-If you are done using the container, you can also remove it by entering the following command:
+When you are done with the class, you can remove it by entering the following command:
 
 ```console
 docker rm dtc-maildev -f
 ```
 
-Once you have removed it, you need to start it again with the `docker run` command shown at the beginning of this step.
+Keep in mind that once you remove, it's gone. You'll need to start it again with the `docker run` command shown at the beginning of this step.
 
 > For your convenience, the `src/Infrastructure` folder contains Powershell scripts for starting the infrastructural components you'll use throughout the workshop. You can use the `src/Infrastructure/maildev/start-maildev.ps1` script to start the MailDev container.
 >
-> If you don't mind starting all the infrastructural containers at once (also for assignments to come), you can also use the `src/Infrastructure/start-all.ps1` script.
+> You can also start all the infrastructural containers at once (also for assignments to come) with the `src/Infrastructure/start-all.ps1` script.
 
 ## Step 2: Use the Dapr output binding in the FineCollectionService
 
-You will add code to the FineCollectionService so it uses the Dapr SMTP output binding to send an email:
+You will enhance the FineCollectionService so that it uses the Dapr SMTP output binding to send fine notice emails to those driving at excessive speeds:
+
+   <img src="img/output-binding-operation.png" style="zoom: 30%;padding-top: 25px;" />
 
 1. Open the file `src/FineCollectionService/Controllers/CollectionController.cs` in VS Code.
 
@@ -77,13 +68,13 @@ You will add code to the FineCollectionService so it uses the Dapr SMTP output b
     public async Task<ActionResult> CollectFine(SpeedingViolation speedingViolation, [FromServices] DaprClient daprClient)
     ```
 
-1. In order to send an email, you first need to create a message body to send as email. The email body must contain the details of the speeding violation and the fine. The service already has a helper method to create an HTML email body. Replace the `// TODO` in the `CollectFine` method with this code:
+1. Start by creating an email message body. It contains the details of the speeding violation and the fine. The service already has a helper method (the `../Helpers/EmailUtils` class)to create an HTML email body. Replace the `// TODO` in the `CollectFine` method with this code:
 
     ```csharp
     var body = EmailUtils.CreateEmailBody(speedingViolation, vehicleInfo, fineString);
     ```
 
-1. Next to the body, you need to specify the sender, recipient and subject of the email. With bindings, you specify this using a dictionary containing `metadata`. Add the following code right after the creation of the body:
+1. You'll also specify the sender, recipient, and subject of the email. With Dapr bindings, you specify these fields using a dictionary containing `metadata`. Add the following code right after the creation of the body:
 
      ```csharp
      var metadata = new Dictionary<string, string>
@@ -102,13 +93,13 @@ You will add code to the FineCollectionService so it uses the Dapr SMTP output b
 
      > The first two parameters passed into `InvokeBindingAsync` are the name of the binding to use and the operation (in this case 'create' the email).
 
-1. Now that this method uses the `[FromServices]` attribute to inject the `DaprClient` class, you need to make sure `DaprClient` is registered with the dependency injection system. Open the file `src/FineCollectionService/Startup.cs`. Add the following using statement to the file:
+1. This method uses the `[FromServices]` attribute to inject the `DaprClient` class. You'll need to register `DaprClient` with the dependency injection container. Open the file `src/FineCollectionService/Startup.cs`. Add the following using statement to the file:
 
    ```csharp
    using System;
    ```
 
-1. Make sure the `DaprClient` is registered with DI. Add the following code to the `ConfigureServices` method (just above the code to register the `VehicleRegistrationService` proxy):
+1. Add the following code to the `ConfigureServices` method (just above the code to register the `VehicleRegistrationService` proxy) to register DaprClient:
 
    ```csharp
    services.AddDaprClient(builder => builder
@@ -116,11 +107,21 @@ You will add code to the FineCollectionService so it uses the Dapr SMTP output b
        .UseGrpcEndpoint($"http://localhost:60001"));
    ```
 
-That's it, that's all the code you need to ask to send an email over SMTP.  
+1. Go back to the terminal window in VS Code and make sure the current folder is `src/FineCollectionService`.
+
+1. Check that your code-changes are correct by building the code. Execute the following command in the terminal window:
+
+   ```console
+   dotnet build
+   ```
+
+   If you see any warnings or errors, review the previous steps to make sure the code is correct
+
+That's it! That's all the code you need to send an email over SMTP.  
 
 ## Step 3: Configure the output binding
 
-In this step you will add a Dapr binding component configuration file to the custom components folder you created in Assignment 3.
+In this step you will add a Dapr binding component configuration file to connect to the SMTP server container you created in step 1. You'll add the file to the custom components folder you created in Assignment 3.
 
 1. Add a new file in the `src/dapr/components` folder named `email.yaml`.
 
@@ -151,9 +152,9 @@ In this step you will add a Dapr binding component configuration file to the cus
      - finecollectionservice
    ```
 
-As you can see, you specify the binding type SMTP (`bindings.smtp`) and you specify in the `metadata` how to connect to the SMTP server container you started in step 1 (running on localhost on port `4025`). The other metadata can be ignored for now.
+As you can see, you specify the binding type  (`bindings.smtp`) and describe how to connect to it in the `metadata` section. For now, you'll run on localhost on port `4025`. The other metadata can be ignored.
 
-Important to notice with bindings is the `name` of the binding. This name must be the same as the name used in the call to the bindings API as you did in the code in step 2:
+It's important to note the `name` of the binding. This name must be the same as that used in the call to the bindings API from step 2:
 
 ```csharp
 daprClient.InvokeBindingAsync("sendmail", "create", body, metadata);
@@ -161,13 +162,13 @@ daprClient.InvokeBindingAsync("sendmail", "create", body, metadata);
 
 ## Step 4: Test the application
 
-You're going to start all the services now. You specify the custom components folder you've created on the command-line using the `--components-path` flag so Dapr will use these config files:
+You're going to start all the services now. Like before, you'll specify the custom components folder you've created using the `--components-path` flag:
 
 1. Make sure no services from previous tests are running (close the terminal windows)
 
 1. Make sure all the Docker containers introduced in the previous assignments are running (you can use the `src/Infrastructure/start-all.ps1` script to start them).
 
-1. Open the terminal window in VS Code and make sure the current folder is `src/VehicleRegistrationService`.
+1. Open a **new** terminal window in VS Code and make sure the current folder is `src/VehicleRegistrationService`.
 
 1. Enter the following command to run the VehicleRegistrationService with a Dapr sidecar:
 
@@ -175,7 +176,7 @@ You're going to start all the services now. You specify the custom components fo
    dapr run --app-id vehicleregistrationservice --app-port 6002 --dapr-http-port 3602 --dapr-grpc-port 60002 --components-path ../dapr/components dotnet run
    ```
 
-1. Open a **new** terminal window in VS Code and change the current folder to `src/FineCollectionService`.
+1. Open a **second** new terminal window in VS Code and change the current folder to `src/FineCollectionService`.
 
 1. Enter the following command to run the FineCollectionService with a Dapr sidecar:
 
@@ -183,7 +184,7 @@ You're going to start all the services now. You specify the custom components fo
    dapr run --app-id finecollectionservice --app-port 6001 --dapr-http-port 3601 --dapr-grpc-port 60001 --components-path ../dapr/components dotnet run
    ```
 
-1. Open a **new** terminal window in VS Code and change the current folder to `src/TrafficControlService`.
+1. Open a **third** new terminal window in VS Code and change the current folder to `src/TrafficControlService`.
 
 1. Enter the following command to run the TrafficControlService with a Dapr sidecar:
 
@@ -191,7 +192,7 @@ You're going to start all the services now. You specify the custom components fo
    dapr run --app-id trafficcontrolservice --app-port 6000 --dapr-http-port 3600 --dapr-grpc-port 60000 --components-path ../dapr/components dotnet run
    ```
 
-1. Open a **new** terminal window in VS Code and change the current folder to `src/Simulation`.
+1. Open a **fourth** new terminal window in VS Code and change the current folder to `src/Simulation`.
 
 1. Start the simulation:
 
@@ -199,7 +200,7 @@ You're going to start all the services now. You specify the custom components fo
    dotnet run
    ```
 
-You should see the same logs as before. But now you should also be able to see the fine emails being sent by the FineCollectionService:
+You should see the same logs as before. You can also view the fine notification emails sent by the FineCollectionService:
 
 1. Open a browser and browse to [http://localhost:4000](http://localhost:4000).
 1. Wait for the first emails to come in.
