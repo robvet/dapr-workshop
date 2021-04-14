@@ -112,7 +112,7 @@ You've now specified a the Dapr **RabbitMQ** pub/sub component: (`pubsub.rabbitm
 
 ## Step 3: Send messages from the TrafficControlService
 
-With the Dapr pub/sub building block, you use a [topic](https://docs.microsoft.com/azure/service-bus-messaging/service-bus-dotnet-how-to-use-topics-subscriptions) to send and receive messages. The producer sends (or *publishes*) messages to the topic while one-to-many consumers subscribe to this topic to receive messages. First. you'll prepare the TrafficControlService to send messages using Dapr pub/sub. It'll become the *publisher*.
+With the Dapr pub/sub building block, you use a [topic](https://docs.microsoft.com/azure/service-bus-messaging/service-bus-dotnet-how-to-use-topics-subscriptions) to send and receive messages. The producer sends (or *publishes*) messages to the topic while one-to-many consumers subscribe to this topic to receive messages. First. you'll prepare the TrafficControlService to send, or publish, messages using Dapr pub/sub.
 
 1. Open the file `src/TrafficControlService/Controllers/TrafficController.cs` in the VS Code.
 
@@ -139,6 +139,14 @@ With the Dapr pub/sub building block, you use a [topic](https://docs.microsoft.c
    ```
 
 Keep in mind that TrafficControlService is no longer coupled to FineCollectionService. Instead, TrafficControlService publishes the message to its Dapr sidecar service on port 3600. The sidecar is then responsible for executing the publish command using the Dapr pub/sub building block and component.
+
+1. Check all your code-changes are correct by building the code. Open the terminal window in VS Code, make sure the current folder is `src/TrafficControlService`, and execute the following command:
+
+   ```console
+   dotnet build
+   ```
+
+   If you see any warnings or errors, review the previous steps to make sure the code is correct.
 
 That's it. You now use Dapr pub/sub to publish a message to a message broker.
 
@@ -287,7 +295,7 @@ The other approach to subscribing to pub/sub events is to do it programmatically
 
 1. Open the file `src/FineCollectionService/Controllers/CollectionController.cs` in VS Code.
 
-1. Add a new operation named `Subscribe` to the controller that will listen to the route `/dapr/dubscribe`:
+1. Add a new operation named `Subscribe` to the controller that will listen to the route `/dapr/subscribe`:
 
    ```csharp
    [Route("/dapr/subscribe")]

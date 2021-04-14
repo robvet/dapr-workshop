@@ -1,14 +1,15 @@
 # Assignment 6 - Add a Dapr input binding
 
-In this assignment, you're going to add a Dapr **input binding** in the TrafficControlService to receive entry- and exit-cam messages over the MQTT protocol.
+In this assignment, you're going to add a Dapr **input binding** in the TrafficControlService. It'll receive entry- and exit-cam messages over the MQTT protocol.
 
 ## Dapr bindings
 
-In this assignment you're going to focus on Dapr input bindings See below for a diagram of how input bindings work:
+In this assignment you'll focus on Dapr input bindings. The following diagram depicts how input bindings work:
 
-<img src="img/input-binding.png" style="zoom: 50%;" />
+<img src="img/input-binding.png" style="zoom: 50%;padding-top: 40px;" />
 
-For this hands-on assignment, this is all you need to know about input bindings. If you want to get more detailed information, read the [introduction to this building block](https://docs.dapr.io/developing-applications/building-blocks/bindings/) in the Dapr documentation.
+For this hands-on assignment, you will add an input binding leveraging the Dapr binding building block. In the previous assignment, you implemented a Dapr input binding. For detailed information, read the [introduction to this building block](https://docs.dapr.io/developing-applications/building-blocks/bindings/) in the Dapr documentation and the [bindings chapter](https://docs.microsoft.com/dotnet/architecture/dapr-for-net-developers/bindings) in the [Dapr for .NET developers](https://docs.microsoft.com/dotnet/architecture/dapr-for-net-developers/) guidance eBook.
+
 
 ## Assignment goals
 
@@ -20,7 +21,7 @@ To complete this assignment, you must reach the following goals:
 
 This assignment targets the operation labeled as **number 5** in the end-state setup:
 
-<img src="../img/dapr-setup.png" style="zoom: 67%;" />
+<img src="../img/dapr-setup.png" style="zoom: 67%;padding-top: 25px;" />
 
 ## DIY instructions
 
@@ -31,6 +32,8 @@ First open the `src` folder in this repo in VS Code. Then open the [Bindings doc
 To get step-by-step instructions to achieve the goals, open the [step-by-step instructions](step-by-step.md).
 
 ## Next assignment
+
+Congratulations! You have now completed assignment 6.
 
 Make sure you stop all running processes and close all the terminal windows in VS Code before proceeding to the next assignment.
 
