@@ -27,10 +27,10 @@ In the example, you will use RabbitMQ as the message broker for the Dapr pub/sub
 1. Start a container instance of a RabbitMQ message broker by entering the following command:
 
    ```console
-   docker run -d -p 5672:5672 --name dtc-rabbitmq rabbitmq:3-alpine
+   docker run -d -p 5672:5672 -p 15672:15672 --name dtc-rabbitmq rabbitmq:3-management
    ```
 
-The command will pull the docker image `rabbitmq:3-alpine` from Docker Hub, copy it onto your machine, and start it. It'll name the container  `dtc-rabbitmq`. The server will be listening for connections on port `5672` (which is the default port for RabbitMQ).
+The command will pull the docker image `rabbitmq:3-alpine` from Docker Hub, copy it onto your machine, and start it. It'll name the container  `dtc-rabbitmq`. The server will be listening for connections on port `5672` (which is the default port for RabbitMQ). It also exposes an an administrative port on `15672` which exposes a dashboard.
 
 If all goes well, you should see some output like this:
 
@@ -285,7 +285,11 @@ You should see the same logs as before. As well, the application behavior is exa
 time="2021-02-27T16:46:02.5989612+01:00" level=info msg="app is subscribed to the following topics: [collectfine] through pubsub=pubsub" app_id=finecollectionservice instance=EDWINW01 scope=dapr.runtime type=log ver=1.0.0
 ```
 
-This log entry shows how Dapr has asked the service which topics it want to subscribe to and created the subscription to the `collectfine` topic.
+This log entry shows that Dapr queried the topic specified by the service `collectfine` and created a corresponding subscription.
+
+RabbitMQ provides a built-in dashboard that presents messaging activity, logging, and performance metrics. Open a browser and navigate to `http://localhost:15672/`. Both the login name is `guest` and the password is `guest`. Shown below, the dashboard is helpful for troubleshooting RabbitMQ anomalies:
+
+   <img src="img/rabbitmq-dashboard.png" style="zoom: 60%;padding-top: 25px;" />
 
 ## Step 6: Receive messages in the FineCollectionService (*Programmatically*)
 
