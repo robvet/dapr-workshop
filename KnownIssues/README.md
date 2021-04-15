@@ -37,7 +37,7 @@ Error message that appears in the Dapr logging when starting a Dapr service:
 
 Sometimes experienced when starting the `mosquitto` container:
 
-<img src="img/mosquitto-error.png" style="padding-top:10px;"/>
+<img src="./Img/mosquitto-error.png" style="padding-top:10px;"/>
 
 - Fix by replacing `$pwd` argument with `"%cd%"` as follows:
 
@@ -45,6 +45,6 @@ Sometimes experienced when starting the `mosquitto` container:
 
 ## Simulation service freezes after starting cameras:
 
-<img src="img/simulation-freeze.png" style="padding-top:10px;"/>
+<img src="./Img/simulation-freeze.png" style="padding-top:10px;"/>
 
 - Make sure that the TrafficControlService is running.
