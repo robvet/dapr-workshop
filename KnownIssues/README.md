@@ -20,7 +20,7 @@ Experienced when starting a Dapr service:
   - Make sure Docker Desktop is started
   - The workshop requires **6 running containers**:
   
-  <img src="img/required-containers.png" style="padding-top:25px;"/>
+  <img src="./Img/required-containers.png" style="padding-top:25px;"/>
 
   - The containers in **red** are installed by Dapr.
   - The other 3 containers must be provisioned manually or by script. The scripts are located in `src/Infrastructure/` folder.
