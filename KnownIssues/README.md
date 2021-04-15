@@ -6,7 +6,7 @@ Here are common issues students sometimes experience with the Dapr workshop.
 
 Experienced when starting a Dapr service:
 
-   > error during connect: This error may indicate that the docker daemon is not running.: Get http://%2F%2F.%2Fpipe%2Fdocker_engine/v1.24/version: open //./pipe/docker_engine: The system cannot find the file specified.
+   > "error during connect: This error may indicate that the docker daemon is not running. Get http: open //./pipe/docker_engine: The system cannot find the file specified."
 
 - Make sure that Docker Desktop is running.
 
