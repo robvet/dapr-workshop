@@ -5,7 +5,7 @@
 ![VehicleRegistrationService logging](img/required-containers.png)
 
 
-  <img src="img/required-containers.png" style="padding-top:25px;"/>
+  <img src="img/test.png"/>
 
 
 
