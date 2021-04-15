@@ -1,5 +1,14 @@
 # Assignment 1 - Run the application
 
+  - The workshop requires **6 running containers**:
+  
+  <img src="img/required-containers.png" style="padding-top:25px;"/>
+
+
+  - The workshop requires **6 running containers**:
+  
+<img src="img/required-containers.png" style="padding-top:25px;"/>
+
 ## Assignment goals
 
 In this assignment, you'll run the Traffic Control application to make sure everything works correctly. At this point, you'll be running the microservice application **without** any Dapr technology. As you work through the lab assignments, you'll add Dapr technology step-by-step.
