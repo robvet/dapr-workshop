@@ -2,7 +2,12 @@
 
   - The workshop requires **6 running containers**:
   
+![VehicleRegistrationService logging](img/required-containers.png)
+
+
   <img src="img/required-containers.png" style="padding-top:25px;"/>
+
+
 
 
   - The workshop requires **6 running containers**:
