@@ -153,7 +153,7 @@ Now it's time for you to get your hands dirty and start with the first assignmen
 1. Clone the Github repository to a local folder on your machine:
 
    ```console
-   git clone hhttps://github.com/robvet/dapr-workshop/tree/
+   git clone https://github.com/robvet/dapr-workshop.git
    ```
 
 2. Before starting with the assignments, I suggest you review  the code of the different services. You can open the `src` folder in this repo in VS Code. All folders used in the assignments are specified relative to the root of the folder where you have cloned the dapr-workshop repository.
