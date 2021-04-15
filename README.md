@@ -135,6 +135,17 @@ You will specify the ports on the command-line when starting a service with the 
 - `--dapr-http-port`
 - `--dapr-grpc-port`
 
+#### Kudos to the originators
+
+Before we start, please give a big hand to original authors of this workshop:
+
+<img src="img/edwin.png" style="zoom:67%;" />
+
+<img src="img/sander.png" style="zoom:67%;" />
+
+Both Edwin and Sander are Principal Architects at InfoSupport in the Netherlands. Both are Microsoft MVPs, avid community presenters, and co-authors of the Microsoft eBook [Dapr for .NET Developers](https://docs.microsoft.com/dotnet/architecture/dapr-for-net-developers/). 
+
+
 #### Get started
 
 Now it's time for you to get your hands dirty and start with the first assignment:

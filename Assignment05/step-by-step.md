@@ -1,10 +1,11 @@
 # Assignment 5 - Add a Dapr output binding
 
+## Assignment goals
+
+In this assignment, you will use the open-source [MailDev](https://github.com/maildev/maildev) component, running inside in a container, as your SMTP server. This is a development SMTP server that doesn't actually send out emails (by default), but collects them and shows them in a built-in inbox. The tool extremely handy for test or demo scenarios. You will run this server as a Docker container.
 ## Step 1: Run the SMTP server
 
-In this assignment, you will use the open-source [MailDev](https://github.com/maildev/maildev) component, running inside in a container, as your SMTP server. This is a development SMTP server that doesn't actually send out emails (by default), but collects them and shows them in a built-in inbox. The tool extremely handy for test or demo scenarios.
-
-You will run this server as a Docker container:
+Start by running the SMTP server:
 
 1. Open the terminal window in VS Code.
 
@@ -50,7 +51,7 @@ Keep in mind that once you remove, it's gone. You'll need to start it again with
 
 You will enhance the FineCollectionService so that it uses the Dapr SMTP output binding to send fine notice emails to those driving at excessive speeds:
 
-   <img src="img/output-binding-operation.png" style="zoom: 30%;padding-top: 25px;" />
+   <img src="img/output-binding-operation.png" style="padding-top: 25px;" />
 
 1. Open the file `src/FineCollectionService/Controllers/CollectionController.cs` in VS Code.
 
@@ -205,7 +206,7 @@ You should see the same logs as before. You can also view the fine notification 
 1. Open a browser and browse to [http://localhost:4000](http://localhost:4000).
 1. Wait for the first emails to come in.
 1. Click on an email in the inbox to see its content:
-   <img src="img/inbox.png" style="zoom:67%;" />
+   <img src="img/inbox.png" style="zoom:67%;padding-top: 25px;" />
 
 ## Next assignment
 

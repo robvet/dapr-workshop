@@ -4,26 +4,28 @@ In this assignment, you're going to add the Dapr **secrets management** building
 
 ## Dapr secrets management building block
 
-Almost all non-trivial applications need to _securely_ store secret data like API keys, database passwords, and more. By nature, these secrets should not be checked into the version control system, but they also need to be accessible to code running in production. This is generally a hard problem, but it's critical to get it right. Otherwise, production systems can be compromised.
+Almost all non-trivial applications need to _securely_ store secret data like API keys, database passwords, and more. As a best practice, secrets should never be checked into the version control system. But, as the same time,they need to be accessible to code running in production. This is generally a challenging requirement, but critical to get right.
 
-Dapr's solution to this problem is the secrets API and secrets stores.
+Dapr provides a solution to this problem: The Dapr secrets building block. It includes an API and a secrets store.
 
 Here's how it works:
 
-- Dapr is set up to use a **secret store** - a place to securely store secret data
-- Application code uses the standard Dapr secrets API to retrieve secrets.
+- Dapr exposes a **secret store** - a place to securely store secret data.
+- Dapr provides an API that enables applications to retrieve secrets from the store.
 
-Some examples for secret stores include `Kubernetes`, `Hashicorp Vault`, `Azure KeyVault`.
+Popular secret stores include `Kubernetes`, `Hashicorp Vault`, and `Azure KeyVault`.
 
-Application code can call the secrets building block API to retrieve secrets from Dapr supported secret stores that can be used in your code. For example, the diagram below shows an application requesting the secret called "mysecret" from a secret store called "vault" from a configured cloud secret store:
+The following diagram depicts an application requesting the secret called "mysecret" from a secret store called "vault" from a configured cloud secret store:
 
 <img src="img/secrets_cloud_stores.png" style="zoom:67%;" />
 
-> For this assignment you are supposed to use the file-based local secret store component. This is only for development or testing purposes. Never use this component in production!
+Note the blue-colored Dapr secrets building block that sits between the application and secret stores.
 
-Another way of using secrets, is to reference them from Dapr configuration files. You will use both ways of working with secrets in this assignment.
+> For this assignment you'll use a file-based local secret store component. Local stores are meant for development or testing purposes. Never use them in production!
 
-For this hands-on assignment, this is all you need to know about this building block. If you want to get more detailed information, read the [introduction to this building block](https://docs.dapr.io/developing-applications/building-blocks/secrets/) in the Dapr documentation.
+Another way of using secrets, is to reference them from Dapr configuration files. You will use both approaches in this assignment.
+
+To learn more about the secrets building block, read the [introduction to this building block](https://docs.dapr.io/developing-applications/building-blocks/secrets/) in the Dapr documentation. Also, checkout the [secrets chapter](https://docs.microsoft.com/dotnet/architecture/dapr-for-net-developers/secrets) in the [Dapr for .NET Developers](https://docs.microsoft.com/dotnet/architecture/dapr-for-net-developers/) guidance eBook.
 
 ## Assignment goals
 

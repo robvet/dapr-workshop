@@ -2,18 +2,13 @@
 
 ## Assignment goals
 
-To complete this assignment, you must reach the following goals:
+This assignment will add the Dapr secrets building block to the TrafficControl application. The following figure depicts the enhancement:
 
-- The credentials used by the SMTP output binding to connect to the SMTP server are retrieved using the Dapr secrets management building block.
-- The FineCollectionService retrieves the license key for the `FineCalculator` component it uses from the Dapr secrets management building block.
-
-This assignment targets number **6** in the end-state setup:
-
-<img src="../img/dapr-setup.png" style="zoom: 67%;" />
+<img src="img/secrets-management-operation.png" style="padding-top: 25px;" />
 
 ## Step 1: Add a secret store component
 
-First, you will add a secrets management component configuration to the solution:
+First, you'll add a secrets management JSON configuration file to the solution:
 
 1. Add a new file in the `src/dapr/components` folder named `secrets.json`.
 
@@ -56,11 +51,11 @@ First, you will add a secrets management component configuration to the solution
      - finecollectionservice   
    ```
 
-As you can see, the `local.file` secret store is used. Important to note here, is that if you specify the path to the `secretsFile` using a relative path (as is the case here), you need to specify this path relative to the folder where you start your service from using the Dapr CLI. Because you start the services from their project folders, the relative path to the components folder is always `../dapr/components`.
+ > Note the `type` element: The `local.file` secret store is specified. This file-based local secret store component is *only* for development or testing purposes. It's not suitable for production!
 
-> As stated, the file-based local secret store component is only for development or testing purposes and is not suitable for production!
+ > Understand that if you specify a relative path to the `secretsFile` (as is the case here), this path must be specified relative to the folder where you start your service using the Dapr CLI. Because you start the services from their project folders, the relative path to the components folder is always `../dapr/components`.
 
-The `nestedSeparator` in the `metadata` section specifies the character that Dapr will use when it flattens the secret file's hierarchy. Eventually, each secret will be uniquely identifiable by one key. In this case, you're using the period (`.`) as character. That means that the secrets from the `secrets.json` file will be identified by the following keys:
+The `nestedSeparator` in the `metadata` section specifies the character that Dapr will use when it flattens the secret file's hierarchy. Each secret will be uniquely identifiable by one key. In this case, you're using the period (`.`) as that character. The convention means that secrets from the `secrets.json` file will be identified by the following keys:
 
 - `smtp.user`
 - `smtp.password`
@@ -74,7 +69,7 @@ As stated, you can reference secrets from other Dapr component configuration fil
 
 1. Open the file `src/dapr/components/email.yaml` in VS Code.
 
-1. Inspect the contents of the file. As you can see, it contains clear-text credentials (username and password). Replace the `user` and `password` fields of the `metadata` with secret references and add a reference to the secrets management building block named `trafficcontrol-secrets` you configured in step 1. The resulting file should look like this:
+1. Inspect the contents of the file. As you can see, it contains clear-text credentials (username and password). Replace the `user` and `password` fields in the `metadata` element. Provide secret references by adding references to the secrets management building block named `trafficcontrol-secrets`, configured in step 1. The resulting file should look like this:
 
    ```yaml
    apiVersion: dapr.io/v1alpha1
@@ -105,7 +100,7 @@ As stated, you can reference secrets from other Dapr component configuration fil
      - finecollectionservice  
    ```
 
-Now, the output binding will use the `smtp.username` and `smtp.password` secrets from the secrets file at runtime.
+Now, the output binding for the SendMail component will use the `smtp.user` and `smtp.password` secrets from the secrets file at runtime.
 
 ## Step 3: Get the license key for the FineCalculator component
 
@@ -125,7 +120,17 @@ You will now change the controller so it retrieves the license key from the Dapr
    _fineCalculatorLicenseKey = secrets["finecalculator.licensekey"];
    ```
 
-> Because the `_fineCalculatorLicenseKey` field is static, this code will execute only once. This is not a best practice, but fine for this sample app.
+   > Because the `_fineCalculatorLicenseKey` field is static, this code will execute only once. This is not a best practice, but fine for this sample app.
+
+1. Go back to the terminal window in VS Code and make sure the current folder is `src/FineCollectionService`.
+
+1. Check all your code-changes are correct by building the code. Execute the following command in the terminal window:
+
+   ```console
+   dotnet build
+   ```
+
+   If you see any warnings or errors, review the previous steps to make sure the code is correct.
 
 Now you're ready to test the application.
 
@@ -137,7 +142,7 @@ You're going to start all the services now. You specify the custom components fo
 
 1. Make sure all the Docker containers introduced in the previous assignments are running (you can use the `src/Infrastructure/start-all.ps1` script to start them).
 
-1. Open the terminal window in VS Code and make sure the current folder is `src/VehicleRegistrationService`.
+1. Open a **new** terminal window in VS Code and make sure the current folder is `src/VehicleRegistrationService`.
 
 1. Enter the following command to run the VehicleRegistrationService with a Dapr sidecar:
 
@@ -145,7 +150,7 @@ You're going to start all the services now. You specify the custom components fo
    dapr run --app-id vehicleregistrationservice --app-port 6002 --dapr-http-port 3602 --dapr-grpc-port 60002 --components-path ../dapr/components dotnet run
    ```
 
-1. Open a **new** terminal window in VS Code and change the current folder to `src/FineCollectionService`.
+1. Open a **second** new terminal window in VS Code and change the current folder to `src/FineCollectionService`.
 
 1. Enter the following command to run the FineCollectionService with a Dapr sidecar:
 
@@ -153,7 +158,7 @@ You're going to start all the services now. You specify the custom components fo
    dapr run --app-id finecollectionservice --app-port 6001 --dapr-http-port 3601 --dapr-grpc-port 60001 --components-path ../dapr/components dotnet run
    ```
 
-1. Open a **new** terminal window in VS Code and change the current folder to `src/TrafficControlService`.
+1. Open a **third** new terminal window in VS Code and change the current folder to `src/TrafficControlService`.
 
 1. Enter the following command to run the TrafficControlService with a Dapr sidecar:
 
@@ -161,7 +166,7 @@ You're going to start all the services now. You specify the custom components fo
    dapr run --app-id trafficcontrolservice --app-port 6000 --dapr-http-port 3600 --dapr-grpc-port 60000 --components-path ../dapr/components dotnet run
    ```
 
-1. Open a **new** terminal window in VS Code and change the current folder to `src/Simulation`.
+1. Open a **fourth** new terminal window in VS Code and change the current folder to `src/Simulation`.
 
 1. Start the simulation:
 

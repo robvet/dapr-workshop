@@ -1,10 +1,14 @@
 # Assignment 6 - Add a Dapr input binding
 
-## Step 1: Use the Dapr input binding in the TrafficControlService
+## Assignment goals
 
 You will add code to the TrafficControlService to leverage a Dapr input binding to send entry- and exit-cam messages. The following diagram depicts the scenario:
 
-   <img src="img/input-binding-operation.png" style="zoom: 30%;padding-top: 25px;" />
+   <img src="img/input-binding-operation.png" style="padding-top: 25px;" />
+
+## Step 1: Use the Dapr input binding in the TrafficControlService
+
+Start by inspecting vehicle entry and exit methods:
 
 1. Open the file `src/TrafficControlService/Controllers/TrafficController.cs` in VS Code.
 

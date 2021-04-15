@@ -16,7 +16,7 @@ To complete this assignment, you must achieve the following goals:
 
 This assignment targets number **2** in the end-state setup:
 
-<img src="../img/dapr-setup.png" style="zoom: 67%;" />
+<img src="img/pub-sub-operation.png" style="zoom: 67%;" />
 
 ## Step 1: Run RabbitMQ as message broker
 
@@ -222,7 +222,7 @@ You're going to start the application, service-by-service. While doing so, you'l
 
 1. First, you'll start the VehicleRegistrationService shown below:
  
-   <img src="../img/start-vehicleregistration.png" style="zoom: 30%;padding-top: 25px;" />
+   <img src="../img/start-vehicleregistration.png" style="padding-top: 25px;" />
 
 1. Open a **new** terminal window in VS Code and make sure the current folder is `src/VehicleRegistrationService`.
 
@@ -239,7 +239,7 @@ You're going to start the application, service-by-service. While doing so, you'l
 
 1. Next, you'll start the FineCollecitonService: 
 
-   <img src="../img/start-finecollection.png" style="zoom: 30%;padding-top: 25px;" />
+   <img src="../img/start-finecollection.png" style="padding-top: 25px;" />
 
 1. Open a **second** new terminal window in VS Code and change the current folder to `src/FineCollectionService`.
 
@@ -254,7 +254,7 @@ You're going to start the application, service-by-service. While doing so, you'l
 
 1. Next, you'll start the TrafficControlService:
 
-   <img src="../img/start-trafficcontrol.png" style="zoom: 30%;padding-top: 25px;" />
+   <img src="../img/start-trafficcontrol.png" style="padding-top: 25px;" />
 
 1. Open a **third** new terminal window in VS Code and change the current folder to `src/TrafficControlService`.
 
@@ -269,7 +269,7 @@ You're going to start the application, service-by-service. While doing so, you'l
 
 1. Finally, you'll start the Traffic Simulator:
 
-   <img src="../img/start-simulator.png" style="zoom: 30%;padding-top: 25px;" />
+   <img src="../img/start-simulator.png" style="padding-top: 25px;" />
 
 1. Open a **fourth** new terminal window in VS Code and change the current folder to `src/Simulation`.
 
@@ -289,7 +289,7 @@ This log entry shows that Dapr queried the topic specified by the service `colle
 
 RabbitMQ provides a built-in dashboard that presents messaging activity, logging, and performance metrics. Open a browser and navigate to `http://localhost:15672/`. Both the login name is `guest` and the password is `guest`. Shown below, the dashboard is helpful for troubleshooting RabbitMQ anomalies:
 
-   <img src="img/rabbitmq-dashboard.png" style="zoom: 60%;padding-top: 25px;" />
+   <img src="img/rabbitmq-dashboard.png" style="padding-top: 25px;" />
 
 ## Step 6: Receive messages in the FineCollectionService (*Programmatically*)
 

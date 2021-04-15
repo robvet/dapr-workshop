@@ -1,5 +1,4 @@
 # Assignment 4 - Add Dapr state management
-
 ## Assignment goals
 
 In this assignment, you'll evolve the TrafficControl application to leverage the Dapr state management building block. Once configured, it'll store the vehicle state as a car passes through the entry-point camera. The operation takes place in the TrafficControlService as shown below:
@@ -181,7 +180,7 @@ Now you need to register the new repository with the .NET Core dependency-inject
    services.AddSingleton<IVehicleStateRepository, DaprVehicleStateRepository>();
    ```
 
-1. Open the terminal window in VS Code and make sure the current folder is `src/FineCollectionService`.
+1. Open the terminal window in VS Code and make sure the current folder is `src/TrafficControlService`.
 
 1. Check that your code-changes are correct by building the code. Execute the following command in the terminal window:
 

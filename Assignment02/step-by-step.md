@@ -1,21 +1,10 @@
 # Assignment 2 - Add Dapr service-to-service invocation
 
-## Assignment goals
-
 Welcome to the step-by-step instructions for assignment 2.
 
-To complete this assignment, you must reach the following goals:
-
-- The VehicleRegistrationService and FineCollectionService are both running with a Dapr sidecar.
-- The FineCollectionService uses the Dapr service invocation building block to call the GetVehicleInfo endpoint (`/vehicleinfo/{licensenumber}`) on the VehicleRegistrationService.
-
-This assignment targets number **1** in the end-state setup:
-
-<img src="../img/dapr-setup.png" style="zoom: 67%;" />
-
  > Be sure that Docker Desktop is running
-
 ## Step 1: Start the VehicleRegistrationService with Dapr
+
 
 In assignment 1, you started all the services using `dotnet run` without using Dapr. The services then communicated among each other using direct HTTP calls. To evolve your application and use Dapr for service-to-service communication, you'll need the Dapr CLI to start Dapr sidecars for each service. The sidecars will then be responsible for cross-service communication. To do so, you'll need to provide values for a number of parameters:
 
@@ -53,9 +42,9 @@ Now you're running a 'Daprized' version of the VehicleRegistrationService. It's 
 
 ## Step 2: Call the VehicleRegistrationService using Dapr service invocation
 
-In this step, you're going to change the code of the FineCollectionService so it uses Dapr service invocation to call the VehicleRegistrationService as shown below:
+In this step, you're going to change the code of the FineCollectionService so it uses Dapr service invocation to call the VehicleRegistrationService. The following figure depicts the update:
 
-<img src="img/finecollection-to-vehicleregistration.png" style="zoom: 25%;padding-top: 25px;" />
+<img src="img/finecollection-to-vehicleregistration.png" style="padding-top: 25px;" />
 
 First you're going to change the code so it calls the Dapr sidecar:
 
@@ -104,7 +93,7 @@ First you're going to change the code so it calls the Dapr sidecar:
 
 1. With the VehicleRegistrationService up and running, you'll now start the FineCollectionService:
 
-   <img src="../img/start-finecollection.png" style="zoom: 25%;padding-top: 25px;" /> 
+   <img src="../img/start-finecollection.png" style="padding-top: 25px;" /> 
 
 1. Open a **new** terminal window in VS Code and make sure the current folder is set to `src/FineCollectionService`.
 
@@ -128,7 +117,7 @@ Now you're going to test the application from end-to-end:
 
 1. First, start the TrafficControlService:
 
-   <img src="../img/start-trafficcontrol.png" style="zoom: 25%;padding-top: 25px;" /> 
+   <img src="../img/start-trafficcontrol.png" style="padding-top: 25px;" /> 
 
 1. Open a **new** terminal window in VS Code and set the current folder to `src/TrafficControlService`.
 
@@ -142,7 +131,7 @@ Now you're going to test the application from end-to-end:
 
 1. Finally, you're going start the traffic simulation service:
 
-   <img src="../img/start-simulator.png" style="zoom: 25%;padding-top: 25px;" /> 
+   <img src="../img/start-simulator.png" style="padding-top: 25px;" /> 
 
 1. Open a **new** terminal window in VS Code and set the current folder to `src/Simulation`.
 
