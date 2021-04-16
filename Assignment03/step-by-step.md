@@ -50,7 +50,7 @@ You can later restart the container by entering the following command:
 docker start dtc-rabbitmq
 ```
 
-Later on, when you're dong with this class, you can remove the running container by entering the following command:
+Later on, when you're done with this class, you can remove the running container by entering the following command:
 
 ```console
 docker rm dtc-rabbitmq -f
