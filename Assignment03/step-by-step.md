@@ -517,7 +517,7 @@ The answer? Change the YAML configuration file. There are absolutely no code cha
      type: pubsub.azure.servicebus
      version: v1
      metadata:
-     - name: connectionstring
+     - name: connectionString
        value: "<your Azure Service Bus connection string"
    scopes:
      - trafficcontrolservice
